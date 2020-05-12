@@ -7,6 +7,8 @@ use yii\base\NotSupportedException;
 class Schema extends \yii\db\Schema
 {
 
+    const TYPE_VARCHAR = 'varchar';
+
 	private $_version, $_schema;
 
 	/**
