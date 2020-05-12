@@ -6,16 +6,16 @@
     "description": "Yii2 SQLAnyWhere",
     "license": "MIT",
     "keywords": [
-	"yii2",
-	"extension"
+        "yii2",
+        "extension"
     ],
     "require": {
-	"php": ">=5.4.0",
-	"yiisoft/yii2": "~2.0.0"
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "~2.0.0"
     },
     "autoload": {
-	"psr-4": {
-	    "hyzhak\\db\\": ""
-	}
+        "psr-4": {
+            "hyzhak\\db\\": ""
+        }
     }
 }

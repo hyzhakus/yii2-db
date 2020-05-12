@@ -52,7 +52,8 @@ class Schema extends \yii\db\Schema
         'time' => self::TYPE_TIME,
         // character strings
         'char' => self::TYPE_CHAR,
-        'varchar' => self::TYPE_STRING,
+        'varchar' => self::TYPE_VARCHAR,
+        'nvarchar' => self::TYPE_STRING,
         'text' => self::TYPE_TEXT,
         // binary strings
         'binary' => self::TYPE_BINARY,
