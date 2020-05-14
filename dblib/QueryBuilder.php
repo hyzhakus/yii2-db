@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -16,31 +17,34 @@ use yii\base\NotSupportedException;
  * @author Oleg Taranov <tff@>
  * @author Vlas Korzhov <hyzhak@gmail.com>
  */
+
 class QueryBuilder extends \yii\db\QueryBuilder
+
 {
     /**
      * @var array mapping from abstract column types (keys) to physical column types (values).
      */
     public $typeMap = [
-        Schema::TYPE_PK => 'int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-        Schema::TYPE_UPK => 'int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY',
-        Schema::TYPE_BIGPK => 'bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-        Schema::TYPE_UBIGPK => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY',
-	Schema::TYPE_CHAR => 'nchar(1)',
-	Schema::TYPE_VARCHAR => 'varchar(255)',
+        Schema::TYPE_PK => 'int IDENTITY PRIMARY KEY',
+        Schema::TYPE_UPK => 'int IDENTITY PRIMARY KEY',
+        Schema::TYPE_BIGPK => 'bigint IDENTITY PRIMARY KEY',
+        Schema::TYPE_UBIGPK => 'bigint IDENTITY PRIMARY KEY',
+        Schema::TYPE_CHAR => 'nchar(1)',
+        Schema::TYPE_VARCHAR => 'varchar(255)',
         Schema::TYPE_STRING => 'nvarchar(255)',
-        Schema::TYPE_TEXT => 'text',
+        Schema::TYPE_TEXT => 'nvarchar(32767)',
+        Schema::TYPE_TINYINT => 'tinyint',
         Schema::TYPE_SMALLINT => 'smallint',
         Schema::TYPE_INTEGER => 'int',
         Schema::TYPE_BIGINT => 'bigint',
         Schema::TYPE_FLOAT => 'float',
         Schema::TYPE_DOUBLE => 'float',
-        Schema::TYPE_DECIMAL => 'decimal',
+        Schema::TYPE_DECIMAL => 'decimal(18,0)',
         Schema::TYPE_DATETIME => 'datetime',
         Schema::TYPE_TIMESTAMP => 'timestamp',
         Schema::TYPE_TIME => 'time',
         Schema::TYPE_DATE => 'date',
-        Schema::TYPE_BINARY => 'binary',
+        Schema::TYPE_BINARY => 'varbinary(32767)',
         Schema::TYPE_BOOLEAN => 'bit',
         Schema::TYPE_MONEY => 'decimal(19,2)',
     ];
@@ -59,12 +63,13 @@ class QueryBuilder extends \yii\db\QueryBuilder
         if ($orderBy !== '') {
             $sql .= $this->separator . $orderBy;
         }
-		
-		if ($this->hasOffset($offset) || $this->hasLimit($limit)) {
-	        $sql = $this->buildTop($sql, $limit, $offset);
+        if ($this->hasOffset($offset) || $this->hasLimit($limit)) {
+            $sql = $this->buildTop($sql, $limit, $offset);
         }
         return $sql;
     }
+
+
 
     /**
      * @param string $sql
@@ -80,9 +85,8 @@ class QueryBuilder extends \yii\db\QueryBuilder
         if ($this->hasOffset($offset)) {
             $sql = preg_replace('/^([\s(])*SELECT( DISTINCT)?(?!\s*TOP\s*\()/i',"\\1SELECT\\2 TOP $limit START AT ".($offset+1), $sql);
         }
-
         return $sql;
-	}
+    }
 
     /**
      * Creates a SELECT EXISTS() SQL statement.
@@ -94,5 +98,5 @@ class QueryBuilder extends \yii\db\QueryBuilder
     {
         return 'SELECT IF EXISTS(' . $rawSql . ') THEN 1 ELSE 0 ENDIF';
     }
-
 }
+
