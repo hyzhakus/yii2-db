@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -19,7 +18,6 @@ use yii\base\NotSupportedException;
  */
 
 class QueryBuilder extends \yii\db\QueryBuilder
-
 {
     /**
      * @var array mapping from abstract column types (keys) to physical column types (values).
@@ -63,13 +61,12 @@ class QueryBuilder extends \yii\db\QueryBuilder
         if ($orderBy !== '') {
             $sql .= $this->separator . $orderBy;
         }
-        if ($this->hasOffset($offset) || $this->hasLimit($limit)) {
+
+       if ($this->hasOffset($offset) || $this->hasLimit($limit)) {
             $sql = $this->buildTop($sql, $limit, $offset);
         }
         return $sql;
     }
-
-
 
     /**
      * @param string $sql
@@ -85,6 +82,7 @@ class QueryBuilder extends \yii\db\QueryBuilder
         if ($this->hasOffset($offset)) {
             $sql = preg_replace('/^([\s(])*SELECT( DISTINCT)?(?!\s*TOP\s*\()/i',"\\1SELECT\\2 TOP $limit START AT ".($offset+1), $sql);
         }
+
         return $sql;
     }
 
@@ -98,5 +96,6 @@ class QueryBuilder extends \yii\db\QueryBuilder
     {
         return 'SELECT IF EXISTS(' . $rawSql . ') THEN 1 ELSE 0 ENDIF';
     }
+
 }
 
